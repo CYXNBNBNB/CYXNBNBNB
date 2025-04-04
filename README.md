@@ -30,5 +30,3 @@ Here are some ideas to get you started:
 <div align="center"> <img src="https://activity-graph.herokuapp.com/graph?username=sun0225SUN&theme=xcode" /> </div>
 
 <div align="center"> <img src="https://github-readme-streak-stats.herokuapp.com/?user=sun0225SUN" /> </div>
-
-<div align="center"> <img src="https://stats.justsong.cn/api/csdn?id=weixin_50915462"> </div>
