@@ -13,9 +13,6 @@ Here are some ideas to get you started:
 - ⚡ Fun fact: ...
 -->
 
-<!--LINE-->
-<img src="https://github.com/heartyang520/HeartYang.github.io/blob/main/share/paomaxian.gif?raw=true" height="20" width="100%">
-
 <!--STATTITLE / WEBSITE: https://textanim.com/-->
 <p align="center"> <img src="https://github.com/heartyang520/HeartYang.github.io/blob/main/share/start.gif?raw=true">
  <!--SNAKETITLE / WEBSITE: https://textanim.com/ -->
