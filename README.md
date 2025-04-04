@@ -32,7 +32,7 @@ width="100%">
 <!--LINE-->
 <img src="https://github.com/heartyang520/HeartYang.github.io/blob/main/share/paomaxian.gif?raw=true" height="20" width="100%">
 <!--使用的语言-搬砖动画-->
-<div align=""> <img src=https://github-readme-stats.vercel.app/api/top-langs/?username=heartyang520&theme=radical&show_icons=true><img src="https://github.com/heartyang520/HeartYang.github.io/blob/main/share/hacker_a.gif?raw=true.gif" width="40%">
+<div align="center"> <img src=https://github-readme-stats.vercel.app/api/top-langs/?username=heartyang520&theme=radical&show_icons=true><img src="https://github.com/heartyang520/HeartYang.github.io/blob/main/share/hacker_a.gif?raw=true.gif" width="40%">
 </div>
 
 <!-- 数据展示-主题&theme=radical-->
