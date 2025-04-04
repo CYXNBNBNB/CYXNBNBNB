@@ -16,7 +16,7 @@ Here are some ideas to get you started:
 <!--LINE-->
 <img src="https://github.com/heartyang520/HeartYang.github.io/blob/main/share/paomaxian.gif?raw=true" height="20" width="100%">
 
-![暗色](https://github.com/CYXNBNBNB/CYXNBNBNB/blob/fe95813b58c65fdf480c30d038982f83dd9cedeb/github-contribution-grid-snake.svg#gh-dark-mode-only)
+![暗色](https://github.com/CYXNBNBNB/CYXNBNBNB/blob/output/github-contribution-grid-snake-dark.svg#gh-dark-mode-only)
 <!--教程 - https://juejin.cn/post/7119378607629140005-->
 
 [![Ethan's github activity graph](https://github-readme-activity-graph.vercel.app/graph?username=CYXNBNBNB&theme=github-compact)](https://github.com/ashutosh00710/github-readme-activity-graph)
