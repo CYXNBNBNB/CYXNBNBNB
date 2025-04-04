@@ -16,21 +16,7 @@ Here are some ideas to get you started:
 <!--LINE-->
 <img src="https://github.com/heartyang520/HeartYang.github.io/blob/main/share/paomaxian.gif?raw=true" height="20" width="100%">
 
-<!--STATTITLE / WEBSITE: https://textanim.com/-->
-<p align="center"> <img src="https://github.com/heartyang520/HeartYang.github.io/blob/main/share/start.gif?raw=true">
- <!--SNAKETITLE / WEBSITE: https://textanim.com/ -->
-<p align="center"> <img src="https://github.com/heartyang520/HeartYang.github.io/blob/main/share/gongxianzhi.gif?raw=true" width="500">
-<!--SNAKEGRAPH / WEBSITE: https://github.com/Platane/snk -->
-<img src="https://github.com/heartyang520/HeartYang.github.io/blob/main/share/snk.svg?raw=true"
-width="100%">
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="github-snake-dark.svg" />
-  <source media="(prefers-color-scheme: light)" srcset="github-snake.svg" />
-  <img alt="github-snake" src="github-snake.svg" />
-</picture>
-
-![暗色](https://raw.githubusercontent.com/zhoufanglu/githubSNK/df18a4a2fb544d5fc0e692f98c3436e9dccaa547/github-contribution-grid-snake.svg#gh-dark-mode-only)
+![暗色](https://github.com/CYXNBNBNB/CYXNBNBNB/blob/fe95813b58c65fdf480c30d038982f83dd9cedeb/github-contribution-grid-snake.svg#gh-dark-mode-only)
 
 [![Ethan's github activity graph](https://github-readme-activity-graph.vercel.app/graph?username=CYXNBNBNB&theme=github-compact)](https://github.com/ashutosh00710/github-readme-activity-graph)
 
