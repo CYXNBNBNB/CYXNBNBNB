@@ -34,6 +34,7 @@ Here are some ideas to get you started:
  <!--SNAKETITLE / WEBSITE: https://textanim.com/ -->
 <p align="center"> <img src="https://github.com/heartyang520/HeartYang.github.io/blob/main/share/gongxianzhi.gif?raw=true" width="500">
 
+<!--贪吃蛇-->
 ![暗色](https://raw.githubusercontent.com/CYXNBNBNB/CYXNBNBNB/refs/heads/output/github-contribution-grid-snake-dark.svg)
 <!--教程 - https://www.cnblogs.com/javadog-net/p/17746748.html-->
 
