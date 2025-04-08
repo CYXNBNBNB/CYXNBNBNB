@@ -1,4 +1,6 @@
-![reversal](https://capsule-render.vercel.app/api?type=waving&color=0:480048,50:C04848,100:480048&text=Hey!%20Nice%20to%20see%20you.&fontAlign=50&fontSize=30&fontAlignY=33&fontColor=E4E4E4&animation=fadeIn)
+![reversal](https://capsule-render.vercel.app/api?type=waving&color=0:141321,50:b4336c,100:141321&text=Hey!%20Nice%20to%20see%20you.&fontAlign=50&fontSize=30&fontAlignY=33&fontColor=E4E4E4&animation=fadeIn)
+<!-- [数据展示-主题&theme=radical](https://github.com/kyechan99/capsule-render)-->
+
 <!--
 **CYXNBNBNB/CYXNBNBNB** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 
