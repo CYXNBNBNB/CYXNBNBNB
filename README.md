@@ -1,5 +1,4 @@
-![reversal](https://capsule-render.vercel.app/api?type=rect&text=Hey!%20Nice%20to%20see%20you.&fontAlign=50&fontSize=30&theme=radical&animation=Waving)
-
+![reversal](https://capsule-render.vercel.app/api?type=waving&text=Hey!%20Nice%20to%20see%20you.&fontAlign=50&fontSize=30&theme=radical)
 <!--
 **CYXNBNBNB/CYXNBNBNB** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 
