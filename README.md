@@ -1,4 +1,4 @@
-![reversal](https://capsule-render.vercel.app/api?type=waving&color=0:141321,50:b4336c,100:141321&text=Hey!%20Nice%20to%20see%20you.&fontAlign=50&fontSize=30&fontAlignY=33&fontColor=e0dad8&animation=fadeIn)
+![reversal](https://capsule-render.vercel.app/api?type=waving&color=0:141321,50:b4336c,100:141321&text=Hey!%20Nice%20to%20see%20you.&fontAlign=50&fontSize=30&fontAlignY=34&fontColor=e0dad8&animation=fadeIn)
 <!-- [数据展示-主题&theme=radical](https://github.com/kyechan99/capsule-render)-->
 
 <!--
