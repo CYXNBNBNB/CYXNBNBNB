@@ -62,5 +62,17 @@ Here are some ideas to get you started:
 
 
 <!-- YIJING-START -->
-（每日更新）
+<!-- YIJING-START -->
+## 🌌 今日卦象 (2025-04-15)
+
+### ䷋ 否
+
+**卦辞**
+否之匪人，不利君子贞，大往小来。
+
+**大象**
+天地不交，君子以俭德辟难。
+
+**启示**
+环境不利，韬光养晦。
 <!-- YIJING-END -->
