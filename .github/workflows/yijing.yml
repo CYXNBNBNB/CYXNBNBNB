@@ -40,12 +40,20 @@ jobs:
           echo "" >> README.md
 
       - name: Commit and push changes
-        env:
-          TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          git config --global user.name "CYXNBNBNB"
-          git config --global user.email "cyxnbnbnb@gmail.com"
-          git remote set-url origin https://x-access-token:${TOKEN}@github.com/${{ github.repository }}
-          git add README.md
-          git commit -m "🌌 Mystic update on $(date '+%Y-%m-%d')" || echo "No changes to commit"
-          git push origin main
+  env:
+    TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  run: |
+    # 配置 git 用户信息
+    git config --global user.name "CYXNBNBNB"
+    git config --global user.email "cyxnbnbnb@gmail.com"
+    
+    # 使用 GITHUB_TOKEN 设置远程仓库 URL
+    git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+    
+    # 添加更改并提交
+    git add README.md
+    git commit -m "🌌 Mystic I Ching update on $(date '+%Y-%m-%d')" || echo "No changes to commit"
+    
+    # 推送到 main 分支
+    git push origin main
+
