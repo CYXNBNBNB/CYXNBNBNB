@@ -14,8 +14,8 @@ jobs:
 
       - name: Generate mystic quote and fortune and append to README
         run: |
-          # 加载64卦数据 (这里假设yijing_64gua.json存放在仓库的根目录)
-          HEXAGRAMS=$(cat yijing_64gua.json)
+          # 加载64卦数据
+          HEXAGRAMS=$(cat data/yijing_64gua.json)
 
           # 随机选择一卦 (0-63)
           HEXAGRAM_INDEX=$(( RANDOM % 64 ))
