@@ -1,79 +1,51 @@
-name: 🌌 Mystic I Ching Daily
+name: Daily Horoscopes Commit
 
 on:
   schedule:
-    - cron: '0 0 * * *'   # 每天 UTC 00:00（北京时间 08:00）
+    - cron: '0 0 * * *'   # 每天 UTC 00:00（北京时间 08:00
   workflow_dispatch:
 
 jobs:
-  iching-commit:
+  commit:
     runs-on: ubuntu-latest
     steps:
-      - name: 🛎️ Checkout repo
+      - name: Checkout the repo
         uses: actions/checkout@v4
 
-      - name: 🎴 Generate I Ching Divination
-        id: divination
+      - name: Generate mystic quote and fortune and append to README
         run: |
-          # 安装JSON处理工具
-          sudo apt-get -qq install jq
+          # 加载64卦数据 (这里假设yijing_64gua.json存放在仓库的根目录)
+          HEXAGRAMS=$(cat yijing_64gua.json)
 
-          # 易经六十四卦数据路径
-          ICHING_JSON_PATH="data/yijing_64gua.json"
-          if [ ! -f "$ICHING_JSON_PATH" ]; then
-            echo "易经数据文件未找到！"
-            exit 1
-          fi
-
-          # 随机选择卦象 (0-63)
+          # 随机选择一卦 (0-63)
           HEXAGRAM_INDEX=$(( RANDOM % 64 ))
-
-          # 读取JSON数据并提取卦象
-          HEXAGRAM=$(jq -r ".[$HEXAGRAM_INDEX]" "$ICHING_JSON_PATH")
           
-          # 提取卦象信息
-          SYMBOL=$(echo $HEXAGRAM | jq -r '.symbol')
-          NAME=$(echo $HEXAGRAM | jq -r '.name')
-          TEXT=$(echo $HEXAGRAM | jq -r '.text')
-          IMAGE=$(echo $HEXAGRAM | jq -r '.image')
-          INTERPRETATION=$(echo $HEXAGRAM | jq -r '.interpretation')
+          # 获取选中的卦信息
+          HEXAGRAM=$(echo "$HEXAGRAMS" | jq -r ".[$HEXAGRAM_INDEX]")
+          SYMBOL=$(echo "$HEXAGRAM" | jq -r '.symbol')
+          NAME=$(echo "$HEXAGRAM" | jq -r '.name')
+          TEXT=$(echo "$HEXAGRAM" | jq -r '.text')
+          IMAGE=$(echo "$HEXAGRAM" | jq -r '.image')
+          INTERPRETATION=$(echo "$HEXAGRAM" | jq -r '.interpretation')
 
-          # 输出卦象信息
-          echo "SYMBOL=$SYMBOL" >> $GITHUB_OUTPUT
-          echo "NAME=$NAME" >> $GITHUB_OUTPUT
-          echo "TEXT=$TEXT" >> $GITHUB_OUTPUT
-          echo "IMAGE=$IMAGE" >> $GITHUB_OUTPUT
-          echo "INTERPRETATION=$INTERPRETATION" >> $GITHUB_OUTPUT
-
-      - name: 📖 Update divination.md
-        run: |
-          # 获取当前日期
           DATE=$(date '+%Y-%m-%d')
 
-          # 格式化占卜结果为Markdown
-          DIVINATION_BANNER=$(cat <<EOF
+          # 将选中的卦信息添加到 README.md 文件
+          echo "" >> README.md
+          echo "### 🌌 今日卦象 ($DATE)" >> README.md
+          echo "卦象: $SYMBOL $NAME" >> README.md
+          echo "卦辞: $TEXT" >> README.md
+          echo "大象: $IMAGE" >> README.md
+          echo "启示: $INTERPRETATION" >> README.md
+          echo "" >> README.md
 
-          ## 🌙 今日卦象 ($DATE)
-
-          ### ${{ steps.divination.outputs.SYMBOL }} ${{ steps.divination.outputs.NAME }}
-          **卦辞**: ${{ steps.divination.outputs.TEXT }}  
-          **大象**: ${{ steps.divination.outputs.IMAGE }}  
-          **启示**: ${{ steps.divination.outputs.INTERPRETATION }}
-
-          EOF
-          )
-
-          # 将占卜结果追加到 divination.md 文件中
-          echo "$DIVINATION_BANNER" >> divination.md
-          echo "✅ 已更新今日卦象"
-
-      - name: 🚀 Commit Changes
+      - name: Commit and push changes
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git config --global user.name "易经占卜官"
+          git config --global user.name "CYXNBNBNB"
           git config --global user.email "cyxnbnbnb@gmail.com"
-          git remote set-url origin https://x-access-token:$GITHUB_TOKEN@github.com/${{ github.repository }}
-          git add divination.md
-          git commit -m "🌌 ${{ steps.divination.outputs.SYMBOL }} 卦象更新 - $(date '+%Y-%m-%d')" || echo "🔄 无内容变更"
+          git remote set-url origin https://x-access-token:${TOKEN}@github.com/${{ github.repository }}
+          git add README.md
+          git commit -m "🌌 Mystic update on $(date '+%Y-%m-%d')" || echo "No changes to commit"
           git push origin main
