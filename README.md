@@ -60,23 +60,7 @@ Here are some ideas to get you started:
 <!--Github奖杯数据展示-->
 <div align="center"> <img src="https://github-profile-trophy.vercel.app/?username=CYXNBNBNB&theme=radical" />
 
-### 🌌 今日卦象 (2025-04-15)
-卦象: ䷟ 恒
-卦辞: 亨，无咎，利贞。利有攸往。
-大象: 雷风相与，君子以立不易方。
-启示: 持之以恒，坚守原则。
 
-
-## 🌌 今日卦象 (2025-04-15)
-
-### ䷜ 坎
-
-**卦辞**:
-习坎，有孚，维心亨，行有尚。
-
-**大象**:
-水洊至，君子以常德行习教事。
-
-**启示**:
-险境重重，坚定信念。
-
+<!-- YIJING-START -->
+（每日更新）
+<!-- YIJING-END -->

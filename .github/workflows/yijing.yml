@@ -14,13 +14,9 @@ jobs:
 
       - name: Generate daily I Ching hexagram and update README
         run: |
-          # 安装 jq 工具
           sudo apt-get update && sudo apt-get install -y jq
 
-          # 读取64卦数据
           HEXAGRAMS=$(cat data/yijing_64gua.json)
-
-          # 随机选择一卦
           INDEX=$(( RANDOM % 64 ))
           HEXAGRAM=$(echo "$HEXAGRAMS" | jq ".[$INDEX]")
 
@@ -29,23 +25,32 @@ jobs:
           TEXT=$(echo "$HEXAGRAM" | jq -r '.text')
           IMAGE=$(echo "$HEXAGRAM" | jq -r '.image')
           INTERPRETATION=$(echo "$HEXAGRAM" | jq -r '.interpretation')
-
           DATE=$(date '+%Y-%m-%d')
 
-          echo "" >> README.md
-          echo "## 🌌 今日卦象 ($DATE)" >> README.md
-          echo "" >> README.md
-          echo "### $SYMBOL $NAME" >> README.md
-          echo "" >> README.md
-          echo "**卦辞**:" >> README.md
-          echo "$TEXT" >> README.md
-          echo "" >> README.md
-          echo "**大象**:" >> README.md
-          echo "$IMAGE" >> README.md
-          echo "" >> README.md
-          echo "**启示**:" >> README.md
-          echo "$INTERPRETATION" >> README.md
-          echo "" >> README.md
+          {
+            echo "<!-- YIJING-START -->"
+            echo "## 🌌 今日卦象 ($DATE)"
+            echo ""
+            echo "### $SYMBOL $NAME"
+            echo ""
+            echo "**卦辞**"
+            echo "$TEXT"
+            echo ""
+            echo "**大象**"
+            echo "$IMAGE"
+            echo ""
+            echo "**启示**"
+            echo "$INTERPRETATION"
+            echo "<!-- YIJING-END -->"
+          } > temp_divination.md
+
+          # 替换 README 中的区块
+          awk '
+            BEGIN {found=0}
+            /<!-- YIJING-START -->/ {print; while ((getline line < "temp_divination.md") > 0) print line; found=1; next}
+            /<!-- YIJING-END -->/ {found=0; next}
+            found == 0 {print}
+          ' README.md > README_tmp.md && mv README_tmp.md README.md
 
       - name: Commit and push changes
         env:
