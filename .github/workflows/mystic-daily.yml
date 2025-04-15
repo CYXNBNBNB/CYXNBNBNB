@@ -1,4 +1,4 @@
-name: 🌙 Mystic Daily Commit
+name: Daily Horoscopes Commit
 
 on:
   schedule:
@@ -14,20 +14,29 @@ jobs:
 
       - name: Generate mystic quote and fortune and append to README
         run: |
-          fortunes=(
-            "🌟 今日の運勢：大吉 — 万事順調、心静如水。"
-            "🌞 今日の運勢：中吉 — 有收获，但需谨慎行事。"
-            "🌤️ 今日の運勢：小吉 — 细雨润物，蓄势待发。"
-            "🌫️ 今日の運勢：末吉 — 运转微妙，勿急勿躁。"
-            "🌧️ 今日の運勢：凶 — 凡事不强求，静观其变。"
-          )
+          # 加载64卦数据 (这里假设yijing_64gua.json存放在仓库的根目录)
+          HEXAGRAMS=$(cat yijing_64gua.json)
 
-          FORTUNE=${fortunes[$RANDOM % ${#fortunes[@]}]}
+          # 随机选择一卦 (0-63)
+          HEXAGRAM_INDEX=$(( RANDOM % 64 ))
+          
+          # 获取选中的卦信息
+          HEXAGRAM=$(echo "$HEXAGRAMS" | jq -r ".[$HEXAGRAM_INDEX]")
+          SYMBOL=$(echo "$HEXAGRAM" | jq -r '.symbol')
+          NAME=$(echo "$HEXAGRAM" | jq -r '.name')
+          TEXT=$(echo "$HEXAGRAM" | jq -r '.text')
+          IMAGE=$(echo "$HEXAGRAM" | jq -r '.image')
+          INTERPRETATION=$(echo "$HEXAGRAM" | jq -r '.interpretation')
+
           DATE=$(date '+%Y-%m-%d')
 
+          # 将选中的卦信息添加到 README.md 文件
           echo "" >> README.md
-          echo "$FORTUNE" >> README.md
-          echo "🗓️ $DATE" >> README.md
+          echo "### 🌌 今日卦象 ($DATE)" >> README.md
+          echo "卦象: $SYMBOL $NAME" >> README.md
+          echo "卦辞: $TEXT" >> README.md
+          echo "大象: $IMAGE" >> README.md
+          echo "启示: $INTERPRETATION" >> README.md
           echo "" >> README.md
 
       - name: Commit and push changes
