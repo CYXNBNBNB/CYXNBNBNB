@@ -65,7 +65,6 @@ Here are some ideas to get you started:
 
 
 <!-- YIJING-START -->
-<!-- YIJING-START -->
 ## 🌌 今日卦象 (2025-04-15)
 
 ### ䷯ 井
@@ -78,5 +77,5 @@ Here are some ideas to get you started:
 
 **启示**
 修德养民，持之以恒。
-<!-- YIJING-END -->
+<!-- YIJING-START -->
 <!-- YIJING-START -->
