@@ -16,8 +16,14 @@ jobs:
         run: |
           sudo apt-get update && sudo apt-get install -y jq
 
+          # 加载64卦数据
           HEXAGRAMS=$(cat data/yijing_64gua.json)
-          INDEX=$(( RANDOM % 64 ))
+
+          # 用日期作为种子确保每天唯一且不变
+          DATE=$(date '+%Y-%m-%d')
+          SEED=$(date '+%Y%m%d')
+          INDEX=$(( SEED % 64 ))
+
           HEXAGRAM=$(echo "$HEXAGRAMS" | jq ".[$INDEX]")
 
           SYMBOL=$(echo "$HEXAGRAM" | jq -r '.symbol')
@@ -25,7 +31,6 @@ jobs:
           TEXT=$(echo "$HEXAGRAM" | jq -r '.text')
           IMAGE=$(echo "$HEXAGRAM" | jq -r '.image')
           INTERPRETATION=$(echo "$HEXAGRAM" | jq -r '.interpretation')
-          DATE=$(date '+%Y-%m-%d')
 
           {
             echo "<!-- YIJING-START -->"
@@ -47,7 +52,11 @@ jobs:
           # 替换 README 中的区块
           awk '
             BEGIN {found=0}
-            /<!-- YIJING-START -->/ {print; while ((getline line < "temp_divination.md") > 0) print line; found=1; next}
+            /<!-- YIJING-START -->/ {
+              print; 
+              while ((getline line < "temp_divination.md") > 0) print line; 
+              found=1; next
+            }
             /<!-- YIJING-END -->/ {found=0; next}
             found == 0 {print}
           ' README.md > README_tmp.md && mv README_tmp.md README.md
