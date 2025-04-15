@@ -59,3 +59,10 @@ Here are some ideas to get you started:
 <img src="https://github.com/heartyang520/HeartYang.github.io/blob/main/share/beker.gif?raw=true"  width="100px" height="100px"></p>
 <!--Github奖杯数据展示-->
 <div align="center"> <img src="https://github-profile-trophy.vercel.app/?username=CYXNBNBNB&theme=radical" />
+
+### 🌌 今日卦象 (2025-04-15)
+卦象: ䷟ 恒
+卦辞: 亨，无咎，利贞。利有攸往。
+大象: 雷风相与，君子以立不易方。
+启示: 持之以恒，坚守原则。
+
