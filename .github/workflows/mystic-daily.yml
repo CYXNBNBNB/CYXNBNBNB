@@ -1,0 +1,57 @@
+name: 🌙 Mystic Daily Commit
+
+on:
+  schedule:
+    - cron: '0 0 * * *'   # 每天 UTC 00:00（北京时间 08:00
+  workflow_dispatch:
+
+jobs:
+  commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repo
+        uses: actions/checkout@v4
+
+      - name: Generate mystic quote and fortune and append to README
+        run: |
+          quotes=(
+            "🌒 月影揺れ、言葉は風に消ゆ。"
+            "🌓 静夜に、星の声が胸を打つ。"
+            "🌕 雲を割り、白き月、ただ独り。"
+            "🌘 鳥も眠る、夜の底に夢ひとつ。"
+            "🌑 闇を抱き、光はなお生まれくる。"
+            "🌙 風花舞い、過去と未来を繋ぐ。"
+            "🌗 夢の跡、月だけがすべてを見ていた。"
+            "🌖 泡沫のごとく、想いは昇華す。"
+            "🌔 白露落ち、記憶の舟は岸を離る。"
+            "🌑 見えぬものこそ、心を照らす。"
+          )
+
+          fortunes=(
+            "🌟 今日の運勢：大吉 — 万事順調、心静如水。"
+            "🌞 今日の運勢：中吉 — 有收获，但需谨慎行事。"
+            "🌤️ 今日の運勢：小吉 — 细雨润物，蓄势待发。"
+            "🌫️ 今日の運勢：末吉 — 运转微妙，勿急勿躁。"
+            "🌧️ 今日の運勢：凶 — 凡事不强求，静观其变。"
+          )
+
+          QUOTE=${quotes[$RANDOM % ${#quotes[@]}]}
+          FORTUNE=${fortunes[$RANDOM % ${#fortunes[@]}]}
+          DATE=$(date '+%Y-%m-%d')
+
+          echo "" >> README.md
+          echo "$QUOTE" >> README.md
+          echo "$FORTUNE" >> README.md
+          echo "🗓️ $DATE" >> README.md
+          echo "" >> README.md
+
+      - name: Commit and push changes
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config --global user.name "CYXNBNBNB"
+          git config --global user.email "cyxnbnbnb@gmail.com"
+          git remote set-url origin https://x-access-token:${TOKEN}@github.com/${{ github.repository }}
+          git add README.md
+          git commit -m "🌌 Mystic update on $(date '+%Y-%m-%d')" || echo "No changes to commit"
+          git push origin main
