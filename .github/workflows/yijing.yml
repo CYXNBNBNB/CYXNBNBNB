@@ -18,8 +18,8 @@ jobs:
           # 安装JSON处理工具
           sudo apt-get -qq install jq
 
-          # 加载64卦数据
-          ICHING_JSON_PATH="data/yijing_64gua.json"   # 假设文件在仓库的 data 文件夹中
+          # 易经六十四卦数据路径
+          ICHING_JSON_PATH="data/yijing_64gua.json"
           if [ ! -f "$ICHING_JSON_PATH" ]; then
             echo "易经数据文件未找到！"
             exit 1
@@ -27,8 +27,8 @@ jobs:
 
           # 随机选择卦象 (0-63)
           HEXAGRAM_INDEX=$(( RANDOM % 64 ))
-          
-          # 使用jq解析JSON文件
+
+          # 读取JSON数据并提取卦象
           HEXAGRAM=$(jq -r ".[$HEXAGRAM_INDEX]" "$ICHING_JSON_PATH")
           
           # 提取卦象信息
@@ -38,16 +38,19 @@ jobs:
           IMAGE=$(echo $HEXAGRAM | jq -r '.image')
           INTERPRETATION=$(echo $HEXAGRAM | jq -r '.interpretation')
 
-          # 格式化输出
+          # 输出卦象信息
           echo "SYMBOL=$SYMBOL" >> $GITHUB_OUTPUT
           echo "NAME=$NAME" >> $GITHUB_OUTPUT
           echo "TEXT=$TEXT" >> $GITHUB_OUTPUT
           echo "IMAGE=$IMAGE" >> $GITHUB_OUTPUT
           echo "INTERPRETATION=$INTERPRETATION" >> $GITHUB_OUTPUT
 
-      - name: 📖 Update README
+      - name: 📖 Update divination.md
         run: |
+          # 获取当前日期
           DATE=$(date '+%Y-%m-%d')
+
+          # 格式化占卜结果为Markdown
           DIVINATION_BANNER=$(cat <<EOF
 
           ## 🌙 今日卦象 ($DATE)
@@ -60,7 +63,8 @@ jobs:
           EOF
           )
 
-          echo "$DIVINATION_BANNER" >> README.md
+          # 将占卜结果追加到 divination.md 文件中
+          echo "$DIVINATION_BANNER" >> divination.md
           echo "✅ 已更新今日卦象"
 
       - name: 🚀 Commit Changes
@@ -70,6 +74,6 @@ jobs:
           git config --global user.name "易经占卜官"
           git config --global user.email "cyxnbnbnb@gmail.com"
           git remote set-url origin https://x-access-token:$GITHUB_TOKEN@github.com/${{ github.repository }}
-          git add README.md
+          git add divination.md
           git commit -m "🌌 ${{ steps.divination.outputs.SYMBOL }} 卦象更新 - $(date '+%Y-%m-%d')" || echo "🔄 无内容变更"
           git push origin main
