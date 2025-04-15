@@ -1,0 +1,75 @@
+name: 🌌 Mystic I Ching Daily
+
+on:
+  schedule:
+    - cron: '0 0 * * *'   # 每天 UTC 00:00（北京时间 08:00）
+  workflow_dispatch:
+
+jobs:
+  iching-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🛎️ Checkout repo
+        uses: actions/checkout@v4
+
+      - name: 🎴 Generate I Ching Divination
+        id: divination
+        run: |
+          # 安装JSON处理工具
+          sudo apt-get -qq install jq
+
+          # 加载64卦数据
+          ICHING_JSON_PATH="data/yijing_64gua.json"   # 假设文件在仓库的 data 文件夹中
+          if [ ! -f "$ICHING_JSON_PATH" ]; then
+            echo "易经数据文件未找到！"
+            exit 1
+          fi
+
+          # 随机选择卦象 (0-63)
+          HEXAGRAM_INDEX=$(( RANDOM % 64 ))
+          
+          # 使用jq解析JSON文件
+          HEXAGRAM=$(jq -r ".[$HEXAGRAM_INDEX]" "$ICHING_JSON_PATH")
+          
+          # 提取卦象信息
+          SYMBOL=$(echo $HEXAGRAM | jq -r '.symbol')
+          NAME=$(echo $HEXAGRAM | jq -r '.name')
+          TEXT=$(echo $HEXAGRAM | jq -r '.text')
+          IMAGE=$(echo $HEXAGRAM | jq -r '.image')
+          INTERPRETATION=$(echo $HEXAGRAM | jq -r '.interpretation')
+
+          # 格式化输出
+          echo "SYMBOL=$SYMBOL" >> $GITHUB_OUTPUT
+          echo "NAME=$NAME" >> $GITHUB_OUTPUT
+          echo "TEXT=$TEXT" >> $GITHUB_OUTPUT
+          echo "IMAGE=$IMAGE" >> $GITHUB_OUTPUT
+          echo "INTERPRETATION=$INTERPRETATION" >> $GITHUB_OUTPUT
+
+      - name: 📖 Update README
+        run: |
+          DATE=$(date '+%Y-%m-%d')
+          DIVINATION_BANNER=$(cat <<EOF
+
+          ## 🌙 今日卦象 ($DATE)
+
+          ### ${{ steps.divination.outputs.SYMBOL }} ${{ steps.divination.outputs.NAME }}
+          **卦辞**: ${{ steps.divination.outputs.TEXT }}  
+          **大象**: ${{ steps.divination.outputs.IMAGE }}  
+          **启示**: ${{ steps.divination.outputs.INTERPRETATION }}
+
+          EOF
+          )
+
+          echo "$DIVINATION_BANNER" >> README.md
+          echo "✅ 已更新今日卦象"
+
+      - name: 🚀 Commit Changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config --global user.name "易经占卜官"
+          git config --global user.email "cyxnbnbnb@gmail.com"
+          git remote set-url origin https://x-access-token:$GITHUB_TOKEN@github.com/${{ github.repository }}
+          git add README.md
+          git commit -m "🌌 ${{ steps.divination.outputs.SYMBOL }} 卦象更新 - $(date '+%Y-%m-%d')" || echo "🔄 无内容变更"
+          git push origin main
