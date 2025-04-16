@@ -47,16 +47,19 @@ jobs:
             echo "<!-- YIJING-END -->"
           } > temp_divination.md
 
-          # 替换 README 中的区块
+          # 替换 README 中的区块，确保不会重复插入 <!-- YIJING-START -->
           awk '
             BEGIN {found=0}
             /<!-- YIJING-START -->/ {
-              print; 
-              while ((getline line < "temp_divination.md") > 0) print line; 
-              found=1; next
+              if (!found) { 
+                print;
+                while ((getline line < "temp_divination.md") > 0) print line; 
+                found=1;
+              }
+              next
             }
             /<!-- YIJING-END -->/ {found=0; next}
-            found == 0 {print}
+            {print}
           ' README.md > README_tmp.md && mv README_tmp.md README.md
 
       - name: Commit and push changes
