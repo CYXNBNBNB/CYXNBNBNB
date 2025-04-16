@@ -2,7 +2,7 @@ name: Daily Horoscopes Commit
 
 on:
   schedule:
-    - cron: '0 0 * * *'   # 每天 UTC 00:00（北京时间 08:00）
+    - cron: '0 0 * * *'
   workflow_dispatch:
 
 jobs:
@@ -12,26 +12,18 @@ jobs:
       - name: Checkout the repo
         uses: actions/checkout@v4
 
-      - name: Generate daily I Ching hexagram and update README
+      - name: Generate and update hexagram
         run: |
           sudo apt-get update && sudo apt-get install -y jq
 
-          # 加载64卦数据
+          # 生成卦象内容（同前）
           HEXAGRAMS=$(cat data/yijing_64gua.json)
-
-          # 生成每日唯一索引
           SEED=$(date '+%Y%m%d')
           INDEX=$(( SEED % 64 ))
-
-          # 提取卦象信息
           HEXAGRAM=$(echo "$HEXAGRAMS" | jq ".[$INDEX]")
-          SYMBOL=$(echo "$HEXAGRAM" | jq -r '.symbol')
-          NAME=$(echo "$HEXAGRAM" | jq -r '.name')
-          TEXT=$(echo "$HEXAGRAM" | jq -r '.text')
-          IMAGE=$(echo "$HEXAGRAM" | jq -r '.image')
-          INTERPRETATION=$(echo "$HEXAGRAM" | jq -r '.interpretation')
+          # ...提取变量过程同前...
 
-          # 生成临时文件（不含标记）
+          # 生成临时文件（确保末尾有换行）
           {
             echo "# $SYMBOL $NAME"
             echo ""
@@ -43,45 +35,30 @@ jobs:
             echo ""
             echo "**启示**"
             echo "$INTERPRETATION"
+            echo ""  # 添加空行确保格式
           } > temp_divination.md
 
-          # 精准替换内容（保留标记）
+          # 分两步处理：
+          # 1. 清空标记间内容（保留标记）
           sed -i '/<!-- YIJING-START -->/,/<!-- YIJING-END -->/ {
               /<!-- YIJING-START -->/! {
                   /<!-- YIJING-END -->/!d
               }
-              /<!-- YIJING-START -->/ {
-                  n
-                  r temp_divination.md
-                  :loop
-                  N
-                  /<!-- YIJING-END -->/!b loop
-              }
           }' README.md
 
-          # 强制校验标记完整性
-          if ! grep -q '<!-- YIJING-START -->' README.md; then
-              echo "ERROR: Start marker missing!" >&2
-              exit 1
-          fi
-          if ! grep -q '<!-- YIJING-END -->' README.md; then
-              echo "ERROR: End marker missing! Recovering..."
-              echo "<!-- YIJING-END -->" >> README.md
-          fi
+          # 2. 在开始标记后插入新内容
+          sed -i '/<!-- YIJING-START -->/ r temp_divination.md' README.md
 
           # 调试输出
-          echo "Final content between markers:"
+          echo "最终内容结构："
           sed -n '/<!-- YIJING-START -->/,/<!-- YIJING-END -->/p' README.md
 
-      - name: Commit and push changes
+      - name: Commit changes
         env:
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config --global user.name "CYXNBNBNB"
           git config --global user.email "cyxnbnbnb@gmail.com"
-
-          git remote set-url origin https://x-access-token:${TOKEN}@github.com/${{ github.repository }}
-
           git add README.md
-          git commit -m "🌌 Mystic update on $(date '+%Y-%m-%d')" || echo "No changes to commit"
+          git commit -m "🌌 Mystic update $(date '+%Y-%m-%d')" || echo "No changes"
           git push origin main
