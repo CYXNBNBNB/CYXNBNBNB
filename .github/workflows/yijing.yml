@@ -34,8 +34,6 @@ jobs:
 
           {
             echo "<!-- YIJING-START -->"
-            echo "## 🌌 今日卦象 ($DATE)"
-            echo ""
             echo "# $SYMBOL $NAME"
             echo ""
             echo "**卦辞**"
