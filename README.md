@@ -66,3 +66,13 @@ Here are some ideas to get you started:
 
 <!-- YIJING-START -->
 <!-- YIJING-END -->
+# ䷰ 革
+
+**卦辞**
+巳日乃孚，元亨，利贞，悔亡。
+
+**大象**
+泽中有火，君子以治历明时。
+
+**启示**
+破旧立新，把握时机。
