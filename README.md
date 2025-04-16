@@ -65,17 +65,4 @@ Here are some ideas to get you started:
 
 
 <!-- YIJING-START -->
-## 🌌 今日卦象 (2025-04-15)
-
-### ䷯ 井
-
-**卦辞**
-改邑不改井，无丧无得。往来井井。
-
-**大象**
-木上有水，君子以劳民劝相。
-
-**启示**
-修德养民，持之以恒。
-<!-- YIJING-START -->
-<!-- YIJING-START -->
+<!-- YIJING-END -->
