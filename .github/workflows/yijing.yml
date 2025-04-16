@@ -33,9 +33,10 @@ jobs:
           INTERPRETATION=$(echo "$HEXAGRAM" | jq -r '.interpretation')
 
           {
+            echo "<!-- YIJING-START -->"
             echo "## 🌌 今日卦象 ($DATE)"
             echo ""
-            echo "### $SYMBOL $NAME"
+            echo "# $SYMBOL $NAME"
             echo ""
             echo "**卦辞**"
             echo "$TEXT"
@@ -45,6 +46,7 @@ jobs:
             echo ""
             echo "**启示**"
             echo "$INTERPRETATION"
+            echo "<!-- YIJING-END -->"
           } > temp_divination.md
 
           # 替换 README 中的区块
