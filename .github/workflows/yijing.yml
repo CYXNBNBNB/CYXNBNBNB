@@ -69,7 +69,7 @@ jobs:
           echo "After sed deletion, README.md looks like this:"
           cat README.md
 
-          # 替换 README 中的区块
+          # 替换 README 中的区块，确保内容不会重复插入
           awk '
             BEGIN {found=0}
             /<!-- YIJING-START -->/ {
