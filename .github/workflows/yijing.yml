@@ -47,7 +47,10 @@ jobs:
             echo "<!-- YIJING-END -->"
           } > temp_divination.md
 
-          # 替换 README 中的区块，确保不会重复插入 <!-- YIJING-START -->
+          # 清理掉 README.md 中的旧占卜内容
+          sed -i '/<!-- YIJING-START -->/,/<!-- YIJING-END -->/d' README.md
+
+          # 替换 README 中的区块
           awk '
             BEGIN {found=0}
             /<!-- YIJING-START -->/ {
