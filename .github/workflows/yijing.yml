@@ -32,6 +32,21 @@ jobs:
           IMAGE=$(echo "$HEXAGRAM" | jq -r '.image')
           INTERPRETATION=$(echo "$HEXAGRAM" | jq -r '.interpretation')
 
+          # 输出生成的占卜内容用于调试
+          echo "<!-- YIJING-START -->"
+          echo "# $SYMBOL $NAME"
+          echo ""
+          echo "**卦辞**"
+          echo "$TEXT"
+          echo ""
+          echo "**大象**"
+          echo "$IMAGE"
+          echo ""
+          echo "**启示**"
+          echo "$INTERPRETATION"
+          echo "<!-- YIJING-END -->"
+          
+          # 将占卜内容写入 temp_divination.md
           {
             echo "<!-- YIJING-START -->"
             echo "# $SYMBOL $NAME"
@@ -48,7 +63,11 @@ jobs:
           } > temp_divination.md
 
           # 清理掉 README.md 中的旧占卜内容
-          sed -i '/<!-- YIJING-START -->/,/<!-- YIJING-END -->/d' README.md
+          sed -i '/<!-- YIJING-START -->/ { :a; /<!-- YIJING-END -->/ { n; b }; n; ba }' README.md
+
+          # 输出调试信息，确保 sed 删除操作正确
+          echo "After sed deletion, README.md looks like this:"
+          cat README.md
 
           # 替换 README 中的区块
           awk '
@@ -64,6 +83,10 @@ jobs:
             /<!-- YIJING-END -->/ {found=0; next}
             {print}
           ' README.md > README_tmp.md && mv README_tmp.md README.md
+
+          # 输出替换后的 README 内容以便验证
+          echo "After awk replacement, README.md looks like this:"
+          cat README.md
 
       - name: Commit and push changes
         env:
