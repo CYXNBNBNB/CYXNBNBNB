@@ -16,21 +16,22 @@ jobs:
         run: |
           sudo apt-get update && sudo apt-get install -y jq
 
+          # 加载64卦数据
           HEXAGRAMS=$(cat data/yijing_64gua.json)
 
-          DATE=$(date '+%Y-%m-%d')
+          # 生成每日唯一索引
           SEED=$(date '+%Y%m%d')
           INDEX=$(( SEED % 64 ))
 
+          # 提取卦象信息
           HEXAGRAM=$(echo "$HEXAGRAMS" | jq ".[$INDEX]")
-
           SYMBOL=$(echo "$HEXAGRAM" | jq -r '.symbol')
           NAME=$(echo "$HEXAGRAM" | jq -r '.name')
           TEXT=$(echo "$HEXAGRAM" | jq -r '.text')
           IMAGE=$(echo "$HEXAGRAM" | jq -r '.image')
           INTERPRETATION=$(echo "$HEXAGRAM" | jq -r '.interpretation')
 
-          # 生成不含标记的内容
+          # 生成临时文件（不含标记）
           {
             echo "# $SYMBOL $NAME"
             echo ""
@@ -44,19 +45,33 @@ jobs:
             echo "$INTERPRETATION"
           } > temp_divination.md
 
-          # 使用sed替换两个标记之间的内容
+          # 精准替换内容（保留标记）
           sed -i '/<!-- YIJING-START -->/,/<!-- YIJING-END -->/ {
+              /<!-- YIJING-START -->/! {
+                  /<!-- YIJING-END -->/!d
+              }
               /<!-- YIJING-START -->/ {
                   n
                   r temp_divination.md
-                  d
+                  :loop
+                  N
+                  /<!-- YIJING-END -->/!b loop
               }
-              /<!-- YIJING-END -->/!d
           }' README.md
 
+          # 强制校验标记完整性
+          if ! grep -q '<!-- YIJING-START -->' README.md; then
+              echo "ERROR: Start marker missing!" >&2
+              exit 1
+          fi
+          if ! grep -q '<!-- YIJING-END -->' README.md; then
+              echo "ERROR: End marker missing! Recovering..."
+              echo "<!-- YIJING-END -->" >> README.md
+          fi
+
           # 调试输出
-          echo "Updated README.md content:"
-          cat README.md
+          echo "Final content between markers:"
+          sed -n '/<!-- YIJING-START -->/,/<!-- YIJING-END -->/p' README.md
 
       - name: Commit and push changes
         env:
