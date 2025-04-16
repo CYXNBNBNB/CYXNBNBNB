@@ -66,8 +66,6 @@ Here are some ideas to get you started:
 
 <!-- YIJING-START -->
 <!-- YIJING-START -->
-## 🌌 今日卦象 (2025-04-16)
-
 # ䷰ 革
 
 **卦辞**
@@ -79,3 +77,4 @@ Here are some ideas to get you started:
 **启示**
 破旧立新，把握时机。
 <!-- YIJING-END -->
+<!-- YIJING-START -->
